@@ -1,28 +1,23 @@
 import React from 'react';
 import './navbar.css';
+import NavElement from './navbarElement/navElement';
 
 function Navbar() {
   return (
     <div className="navbar">
-      <div className="navbar-logo">LOGO</div>
+      <NavElement variant="text" title="Logo" href="/"></NavElement>
       <div className="navbar-navigation">
         <div>
-          <a href="localhost:3000" className="nav-el">
-            NAVIGATION 1
-          </a>
+          <NavElement variant="outlined" title="NAVIGATION 1" href="login"></NavElement>
         </div>
         <div>
-          <a href="localhost:3000" className="nav-el">
-            NAVIGATION 2
-          </a>
+          <NavElement variant="outlined" title="NAVIGATION 2" href="#"></NavElement>
         </div>
         <div>
-          <a href="localhost:3000" className="nav-el">
-            NAVIGATION 3
-          </a>
+          <NavElement variant="outlined" title="NAVIGATION 3" href="#"></NavElement>
         </div>
       </div>
-      <div className="navbar-userMng">LOGIN AND STUFF</div>
+      <NavElement variant="outlined" title="LOGIN" href='login'></NavElement>
     </div>
   );
 }

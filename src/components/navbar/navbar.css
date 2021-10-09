@@ -2,7 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 5vh;
+  height: 7vh;
+  background: #282c34;
+  border-bottom: 1px solid #f6f6f6;
 }
 
 .navbar > div {
