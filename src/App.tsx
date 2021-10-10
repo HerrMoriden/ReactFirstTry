@@ -11,10 +11,10 @@ function App() {
       <div className="App">
         <Navbar></Navbar>
         <Switch>
-          <Route path="/login">
+          <Route path="/auth">
             <Authentication />
           </Route>
-
+          
           <Route path="/">
             <LandingPage />
           </Route>

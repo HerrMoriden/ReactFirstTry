@@ -1,24 +1,23 @@
-import React from 'react';
-import './login.css';
 import { TextField } from '@mui/material';
 
 export function Login() {
   return (
     <div id="loginContainer">
-      <h4>Welcome Back</h4>
-      <form id="loginForm">
+      <h2>Welcome Back</h2>
+      <form className="authForm">
         <div className="input-group">
           <TextField
             required
             id="outlined-required"
-            label="Required"
-            defaultValue="User Name"
+            label="User Name"
+            defaultValue=""
           />
 
           <TextField
             required
             id="outlined-required"
             type="password"
+            label="Password"
             autoComplete="current-password"
           />
         </div>

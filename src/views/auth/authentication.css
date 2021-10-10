@@ -1,10 +1,29 @@
 .container {
-  background-color: rgba(54, 54, 54, 0.5);
+  background-color: rgba(173, 173, 173, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50vh;
+  width: 90%;
+  margin: 4vh auto;
+  border-radius: 2vh;
+}
+
+.input-group {
+  margin: 2vh auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.authForm {
+  width: 80vw;
+  height: 30vh;
+  margin: 0 auto;
+  background-color: rgba(54, 54, 54, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 30vh;
-  width: 90%;
-  margin: 4vh auto;
+  align-content: space-around;
 }

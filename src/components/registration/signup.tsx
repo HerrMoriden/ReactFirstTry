@@ -1,48 +1,53 @@
-import React from 'react';
-import './signup.css';
 import { TextField, Divider } from '@mui/material';
 
 function SignUp() {
   return (
-    <form>
-      <div className="input-group name">
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="First Name"
-        />
-
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="Last Name"
-        />
-      </div>
+    <div className="registerContainer">
+      <h2>Welcome, Your Fist Time ?</h2>
       <Divider variant="middle" />
-      <div className="input-group">
-        <TextField
-          required
-          id="outlined-required"
-          label="Required"
-          defaultValue="User Name"
-        />
+      <form className="authForm">
+        <div className="input-group name">
+          <TextField
+            required
+            className="outlined-required"
+            label="First Name"
+            defaultValue=""
+          />
 
-        <TextField
-          required
-          id="outlined-required"
-          type="password"
-          autoComplete="current-password"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          type="password"
-          autoComplete="current-password"
-        />
-      </div>
-    </form>
+          <TextField
+            required
+            className="outlined-required"
+            label="Last Name"
+            defaultValue=""
+          />
+        </div>
+        <Divider variant="middle" />
+        <div className="input-group">
+          <div >
+            <TextField
+              required
+              className="outlined-required"
+              label="User Name"
+              defaultValue=""
+            />
+          </div>
+          <div >
+            <TextField
+              required
+              className="outlined-required"
+              label="Password"
+              type="password"
+            />
+            <TextField
+              required
+              className="outlined-required"
+              label="repeat Password"
+              type="password"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 

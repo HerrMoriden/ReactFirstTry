@@ -14,6 +14,12 @@
 .navbar > .navbar-navigation {
   display: flex;
   width: 30%;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navbar > .auth-group {
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
