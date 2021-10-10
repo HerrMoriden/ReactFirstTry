@@ -1,4 +1,3 @@
-import React from 'react';
 import './navElement.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom'
@@ -13,7 +12,7 @@ interface NavElementProps {
 function NavElement(props: NavElementProps) {
   return (
     <div className="nav-el">
-      <Link to={`${props.href}`}>
+      <Link className='link' to={`${props.href}`}>
       <Button variant={props.variant} className="linkingBtn">
         {props.title}
       </Button>

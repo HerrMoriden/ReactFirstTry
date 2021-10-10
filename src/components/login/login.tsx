@@ -1,10 +1,16 @@
-import { TextField } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 
-export function Login() {
+function Login() {
+  function submitLogin(e: any) {
+    e.preventDefault();
+    console.log(e);
+    return { username: '', password: '' };
+  }
+
   return (
     <div id="loginContainer">
       <h2>Welcome Back</h2>
-      <form className="authForm">
+      <form onSubmit={submitLogin} className="authForm">
         <div className="input-group">
           <TextField
             required
@@ -21,6 +27,9 @@ export function Login() {
             autoComplete="current-password"
           />
         </div>
+        <Button type="submit" variant="outlined">
+          LOGIN
+        </Button>
       </form>
     </div>
   );

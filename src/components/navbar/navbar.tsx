@@ -1,9 +1,7 @@
-import React from 'react';
 import './navbar.css';
 import NavElement from './navbarElement/navElement';
 
 function Navbar() {
-  const authPath: string = 'auth'
   return (
     <div className="navbar">
       <NavElement variant="text" title="Logo" href="/"></NavElement>
@@ -11,21 +9,21 @@ function Navbar() {
         <div>
           <NavElement
             variant="outlined"
-            title="NAV 1"
-            href="login"
-          ></NavElement>
-        </div>
-        <div>
-          <NavElement
-            variant="outlined"
-            title="NAV 2"
+            title="NAV1"
             href="#"
           ></NavElement>
         </div>
         <div>
           <NavElement
             variant="outlined"
-            title="NAV 3"
+            title="NAV2"
+            href="#"
+          ></NavElement>
+        </div>
+        <div>
+          <NavElement
+            variant="outlined"
+            title="NAV3"
             href="#"
           ></NavElement>
         </div>
