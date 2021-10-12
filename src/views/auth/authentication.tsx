@@ -37,6 +37,7 @@ function Authentication() {
   console.log(loginInputValues);
   
   const match = useRouteMatch();
+
   return (
     <div className="container">
       <div> {`${registerInputValues ? registerInputValues.userName : ''}`}</div>
