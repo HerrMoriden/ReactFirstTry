@@ -40,7 +40,6 @@ function Authentication() {
 
   return (
     <div className="container">
-      <div> {`${registerInputValues ? registerInputValues.userName : ''}`}</div>
       <Switch>
         <Route path={`${match.url}/sign-up`}>
           <SignUp submitSignUp={setRegisterInputValues} />
