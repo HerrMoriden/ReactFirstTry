@@ -1,16 +1,11 @@
+import React, { useState } from 'react';
 import { TextField, Divider, Button } from '@mui/material';
-import { useState } from 'react';
+import { RegisterData } from '../../../views/auth/authentication';
 
-interface registerData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  password: string;
-  rePassword: string;
-}
-
-function SignUp() {
-  let inputFields: registerData = {
+function SignUp(props: {
+  submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>;
+}) {
+  let inputFields: RegisterData = {
     firstName: '',
     lastName: '',
     userName: '',
@@ -26,10 +21,26 @@ function SignUp() {
     }));
   };
 
-  function submitSignUp(e: any): registerData {
+  function submitSignUp(e: any): void {
     e.preventDefault();
-    console.log(inputValues);
-    return inputValues;
+    if (submitCheck()) {
+      props.submitSignUp((ev) => ({
+        ...ev,
+        ...inputValues,
+      }));
+    }
+    return;
+  }
+
+  function submitCheck(): boolean {
+    for (const inputValue in inputValues) {
+      if (inputValue.length <= 1) {
+        return false;
+      }
+    }
+    if (inputValues.password !== inputValues.rePassword) return false;
+    
+    return true;
   }
 
   return (
