@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 
 import { LoginData } from '../../../views/auth/authentication';
+import { useAuth } from '../../../contexts/AuthContext';
 
 function Login(props: {
   submitLogin: React.Dispatch<React.SetStateAction<LoginData>>;
 }) {
+  const { login } = useAuth();
+
   let inputFields: LoginData = {
     userName: '',
     password: '',
@@ -19,18 +22,23 @@ function Login(props: {
     }));
   }
 
-  function submitLogin(e: any) {
+  async function submitLogin(e: any) {
     e.preventDefault();
-    if (submitCheck()) {
-      props.submitLogin((ev) => ({
-        ...ev,
-        ...inputValues,
-      }));
+    try {
+      if (checkCredentials()) {
+        props.submitLogin((ev) => ({
+          ...ev,
+          ...inputValues,
+        }));
+        await login(inputValues);
+      }
+      return inputValues;
+    } catch (err) {
+      console.log(err);
     }
-    return inputValues;
   }
 
-  function submitCheck(): boolean {
+  function checkCredentials(): boolean {
     for (const inputValue in inputValues) {
       if (inputValue.length <= 1) {
         return false;

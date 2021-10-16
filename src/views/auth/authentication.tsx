@@ -4,9 +4,6 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Login from '../../components/auth/login/login';
 import SignUp from '../../components/auth/registration/signup';
 
-import { getFirebase }
-
-const firebaseInstance = getFirebase();
 export interface RegisterData {
   firstName: string;
   lastName: string;

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { TextField, Divider, Button } from '@mui/material';
 import { RegisterData } from '../../../views/auth/authentication';
+import { useAuth } from '../../../contexts/AuthContext';
 
 function SignUp(props: {
   submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>;
 }) {
+  const { signUp } = useAuth();
+
   let inputFields: RegisterData = {
     firstName: '',
     lastName: '',
@@ -21,15 +24,20 @@ function SignUp(props: {
     }));
   };
 
-  function submitSignUp(e: any): void {
+  async function submitSignUp(e: any): Promise<void> {
     e.preventDefault();
-    if (submitCheck()) {
-      props.submitSignUp((ev) => ({
-        ...ev,
-        ...inputValues,
-      }));
+    try {
+      if (submitCheck()) {
+        props.submitSignUp((ev) => ({
+          ...ev,
+          ...inputValues,
+        }));
+        await signUp(); 
+      }
+      return;
+    } catch (err) {
+      console.log(err);
     }
-    return;
   }
 
   function submitCheck(): boolean {
@@ -39,7 +47,7 @@ function SignUp(props: {
       }
     }
     if (inputValues.password !== inputValues.rePassword) return false;
-    
+
     return true;
   }
 
