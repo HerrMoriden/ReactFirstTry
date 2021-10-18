@@ -1,51 +1,95 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './authentication.css';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Login from '../../components/auth/login/login';
 import SignUp from '../../components/auth/registration/signup';
-
+import Profile from './profile/profile';
+import { useAuth } from '../../contexts/AuthContext';
 
 export interface RegisterData {
   firstName: string;
   lastName: string;
-  userName: string;
+  email: string;
   password: string;
   rePassword: string;
 }
 
 export interface LoginData {
-  userName: string
-  password: string
+  email: string;
+  password: string;
 }
 
 function Authentication() {
+  const auth = useAuth();
+
   let registerInputFields: RegisterData = {
     firstName: '',
     lastName: '',
-    userName: '',
+    email: '',
     password: '',
     rePassword: '',
   };
-  const [registerInputValues, setRegisterInputValues] = useState(registerInputFields);
 
   let loginInputFields: LoginData = {
-    userName: '',
-    password: ''
+    email: '',
+    password: '',
   };
+
+  const [registerInputValues, setRegisterInputValues] =
+    useState(registerInputFields);
+
   const [loginInputValues, setLoginInputValues] = useState(loginInputFields);
-  console.log(registerInputValues);
-  console.log(loginInputValues);
-  
+
+  const [submitStatus, setSubmitStatus] = useState(false);
+
+  function submitCheck(inputValues: LoginData | RegisterData): boolean {
+    for (const inputValue in inputValues) {
+      if (inputValue.length <= 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function registerCheck(inputValues: RegisterData): boolean {
+    return inputValues.password === inputValues.rePassword;
+  }
+
+  useEffect(() => {
+    if (
+      submitCheck(registerInputValues) &&
+      registerCheck(registerInputValues) &&
+      submitStatus
+    ) {
+      auth?.signUp(registerInputValues.email, registerInputValues.password);
+    }
+  }, [auth, registerInputValues, submitStatus]);
+
+  useEffect(() => {
+    if (submitCheck(loginInputValues) && submitStatus) {
+      auth?.login(loginInputValues.email, loginInputValues.password);
+    }
+  }, [auth, loginInputValues, submitStatus]);
+
   const match = useRouteMatch();
 
   return (
     <div className="container">
       <Switch>
         <Route path={`${match.url}/sign-up`}>
-          <SignUp submitSignUp={setRegisterInputValues} />
+          <SignUp
+            submitSignUp={setRegisterInputValues}
+            submitStatus={setSubmitStatus}
+          />
         </Route>
-        <Route path={`${match.url}`}>
-          <Login submitLogin={setLoginInputValues} />
+        <Route path={`${match.url}/login`}>
+          <Login
+            submitLogin={setLoginInputValues}
+            submitStatus={setSubmitStatus}
+          />
+        </Route>
+        <Route path={match.url}>
+          <Profile />
         </Route>
       </Switch>
     </div>

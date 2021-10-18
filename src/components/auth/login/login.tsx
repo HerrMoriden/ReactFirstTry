@@ -4,10 +4,12 @@ import { TextField, Button } from '@mui/material';
 import { LoginData } from '../../../views/auth/authentication';
 
 function Login(props: {
-  submitLogin: React.Dispatch<React.SetStateAction<LoginData>>;
+  submitLogin: React.Dispatch<React.SetStateAction<LoginData>>,
+  submitStatus: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
+
   let inputFields: LoginData = {
-    userName: '',
+    email: '',
     password: '',
   };
   let [inputValues, setInputValues] = useState(inputFields);
@@ -19,24 +21,18 @@ function Login(props: {
     }));
   }
 
-  function submitLogin(e: any) {
+  async function submitLogin(e: any) {
     e.preventDefault();
-    if (submitCheck()) {
+    try {
+      props.submitStatus(true);
       props.submitLogin((ev) => ({
         ...ev,
         ...inputValues,
       }));
+      return inputValues;
+    } catch (err) {
+      console.log(err);
     }
-    return inputValues;
-  }
-
-  function submitCheck(): boolean {
-    for (const inputValue in inputValues) {
-      if (inputValue.length <= 1) {
-        return false;
-      }
-    }
-    return true;
   }
 
   return (
@@ -45,11 +41,11 @@ function Login(props: {
       <form onSubmit={submitLogin} className="authForm">
         <div className="input-group">
           <TextField
-            name="userName"
+            name="email"
             onChange={handleChange}
             required
             className="outlined-required"
-            label="User Name"
+            label="Email"
             defaultValue=""
           />
 

@@ -3,12 +3,14 @@ import { TextField, Divider, Button } from '@mui/material';
 import { RegisterData } from '../../../views/auth/authentication';
 
 function SignUp(props: {
-  submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>;
+  submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>,
+  submitStatus: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
+
   let inputFields: RegisterData = {
     firstName: '',
     lastName: '',
-    userName: '',
+    email: '',
     password: '',
     rePassword: '',
   };
@@ -21,26 +23,18 @@ function SignUp(props: {
     }));
   };
 
-  function submitSignUp(e: any): void {
+  async function submitSignUp(e: any): Promise<void> {
     e.preventDefault();
-    if (submitCheck()) {
+    try {
+      props.submitStatus(true);
       props.submitSignUp((ev) => ({
         ...ev,
         ...inputValues,
       }));
+      return;
+    } catch (err) {
+      console.log(err);
     }
-    return;
-  }
-
-  function submitCheck(): boolean {
-    for (const inputValue in inputValues) {
-      if (inputValue.length <= 1) {
-        return false;
-      }
-    }
-    if (inputValues.password !== inputValues.rePassword) return false;
-    
-    return true;
   }
 
   return (
@@ -73,11 +67,11 @@ function SignUp(props: {
         <div className="input-group">
           <div>
             <TextField
-              name="userName"
+              name="email"
               onChange={handleChange}
               required
               className="outlined-required"
-              label="User Name"
+              label="Email"
               defaultValue=""
               autoComplete="username"
             />
