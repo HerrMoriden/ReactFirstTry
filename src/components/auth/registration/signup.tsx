@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Divider, Button } from '@mui/material';
 import { RegisterData } from '../../../views/auth/authentication';
-import { useAuth } from '../../../contexts/AuthContext';
 
 function SignUp(props: {
-  submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>;
+  submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>,
+  submitStatus: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-  const auth = useAuth();
 
   let inputFields: RegisterData = {
     firstName: '',
@@ -27,28 +26,15 @@ function SignUp(props: {
   async function submitSignUp(e: any): Promise<void> {
     e.preventDefault();
     try {
-      if (submitCheck()) {
-        props.submitSignUp((ev) => ({
-          ...ev,
-          ...inputValues,
-        }));
-        await auth?.signUp(inputValues.email, inputValues.password); 
-      }
+      props.submitStatus(true);
+      props.submitSignUp((ev) => ({
+        ...ev,
+        ...inputValues,
+      }));
       return;
     } catch (err) {
       console.log(err);
     }
-  }
-
-  function submitCheck(): boolean {
-    for (const inputValue in inputValues) {
-      if (inputValue.length <= 1) {
-        return false;
-      }
-    }
-    if (inputValues.password !== inputValues.rePassword) return false;
-
-    return true;
   }
 
   return (
@@ -81,11 +67,11 @@ function SignUp(props: {
         <div className="input-group">
           <div>
             <TextField
-              name="userName"
+              name="email"
               onChange={handleChange}
               required
               className="outlined-required"
-              label="User Name"
+              label="Email"
               defaultValue=""
               autoComplete="username"
             />

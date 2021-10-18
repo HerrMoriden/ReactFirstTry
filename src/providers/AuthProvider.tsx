@@ -8,6 +8,7 @@ import {
   updateEmail as updateFBEmail,
   updatePassword as updateFBPassword,
   onAuthStateChanged,
+  signOut
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -31,9 +32,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  function logout() {
+  async function logout() {
     try {
-      return auth.signOut();
+      return await signOut(auth);
     } catch (err) {
       console.log(err);
     }
