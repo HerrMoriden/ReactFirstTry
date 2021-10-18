@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './authentication.css';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Login from '../../components/auth/login/login';
 import SignUp from '../../components/auth/registration/signup';
 import Profile from './profile/profile';
-import { AuthContext, useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 export interface RegisterData {
   firstName: string;
@@ -20,7 +20,6 @@ export interface LoginData {
 }
 
 function Authentication() {
-  let user = useContext(AuthContext)?.currentUser;
   const auth = useAuth();
 
   let registerInputFields: RegisterData = {

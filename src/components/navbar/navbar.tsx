@@ -1,11 +1,10 @@
 import { useContext } from 'react';
 import './navbar.css';
 import NavElement from './navbarElement/navElement';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Navbar() {
-  const user = useContext(AuthContext)?.currentUser;
-  console.log(user);
+  const user = useAuth()?.currentUser;
   
   return (
     <div className="navbar">
