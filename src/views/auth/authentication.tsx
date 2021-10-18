@@ -9,7 +9,7 @@ import { auth } from '../../firebase';
 export interface RegisterData {
   firstName: string;
   lastName: string;
-  userName: string;
+  email: string;
   password: string;
   rePassword: string;
 }
@@ -25,7 +25,7 @@ function Authentication() {
   let registerInputFields: RegisterData = {
     firstName: '',
     lastName: '',
-    userName: '',
+    email: '',
     password: '',
     rePassword: '',
   };

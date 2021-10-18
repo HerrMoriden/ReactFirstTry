@@ -16,7 +16,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   function signUp(email: string, password: string) {
-    try {
+    try {      
       return createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.log(err);

@@ -11,7 +11,7 @@ function SignUp(props: {
   let inputFields: RegisterData = {
     firstName: '',
     lastName: '',
-    userName: '',
+    email: '',
     password: '',
     rePassword: '',
   };
@@ -32,7 +32,7 @@ function SignUp(props: {
           ...ev,
           ...inputValues,
         }));
-        await auth?.signUp; 
+        await auth?.signUp(inputValues.email, inputValues.password); 
       }
       return;
     } catch (err) {
