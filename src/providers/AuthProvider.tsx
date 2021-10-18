@@ -7,6 +7,7 @@ import {
   sendPasswordResetEmail,
   updateEmail as updateFBEmail,
   updatePassword as updateFBPassword,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -15,33 +16,57 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   function signUp(email: string, password: string) {
-    return createUserWithEmailAndPassword(auth, email, password);
+    try {
+      return createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function login(email: string, password: string) {
-    return signInWithEmailAndPassword(auth, email, password);
+    try {
+      return signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function logout() {
-    return auth.signOut();
+    try {
+      return auth.signOut();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function resetPassword(email: string) {
-    return sendPasswordResetEmail(auth, email);
+    try {
+      return sendPasswordResetEmail(auth, email);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function updateEmail(email: string) {
-    if (!currentUser) return;
-    return updateFBEmail(currentUser, email);
+    try {
+      if (!currentUser) return;
+      return updateFBEmail(currentUser, email);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function updatePassword(password: string) {
-    if (!currentUser) return;
-    return updateFBPassword(currentUser, password);
+    try {
+      if (!currentUser) return;
+      return updateFBPassword(currentUser, password);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth ,firebaseUser => {
       setCurrentUser(firebaseUser);
       setLoading(false);
     });

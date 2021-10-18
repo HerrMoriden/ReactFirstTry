@@ -6,7 +6,7 @@ import { useAuth } from '../../../contexts/AuthContext';
 function SignUp(props: {
   submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>;
 }) {
-  const { signUp } = useAuth();
+  const auth = useAuth();
 
   let inputFields: RegisterData = {
     firstName: '',
@@ -32,7 +32,7 @@ function SignUp(props: {
           ...ev,
           ...inputValues,
         }));
-        await signUp(); 
+        await auth?.signUp; 
       }
       return;
     } catch (err) {

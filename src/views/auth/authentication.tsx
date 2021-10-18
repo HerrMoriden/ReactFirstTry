@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './authentication.css';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Login from '../../components/auth/login/login';
 import SignUp from '../../components/auth/registration/signup';
+import { AuthContext } from '../../contexts/AuthContext';
+import { auth } from '../../firebase';
 
 export interface RegisterData {
   firstName: string;
@@ -13,11 +15,13 @@ export interface RegisterData {
 }
 
 export interface LoginData {
-  userName: string
-  password: string
+  email: string;
+  password: string;
 }
 
 function Authentication() {
+  let user = useContext(AuthContext);
+
   let registerInputFields: RegisterData = {
     firstName: '',
     lastName: '',
@@ -25,16 +29,17 @@ function Authentication() {
     password: '',
     rePassword: '',
   };
-  const [registerInputValues, setRegisterInputValues] = useState(registerInputFields);
+  const [registerInputValues, setRegisterInputValues] =
+    useState(registerInputFields);
 
   let loginInputFields: LoginData = {
-    userName: '',
-    password: ''
+    email: '',
+    password: '',
   };
   const [loginInputValues, setLoginInputValues] = useState(loginInputFields);
   console.log(registerInputValues);
   console.log(loginInputValues);
-  
+
   const match = useRouteMatch();
 
   return (

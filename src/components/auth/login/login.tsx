@@ -7,10 +7,10 @@ import { useAuth } from '../../../contexts/AuthContext';
 function Login(props: {
   submitLogin: React.Dispatch<React.SetStateAction<LoginData>>;
 }) {
-  const { login } = useAuth();
+  const auth = useAuth();
 
   let inputFields: LoginData = {
-    userName: '',
+    email: '',
     password: '',
   };
   let [inputValues, setInputValues] = useState(inputFields);
@@ -30,7 +30,7 @@ function Login(props: {
           ...ev,
           ...inputValues,
         }));
-        await login(inputValues);
+        await auth?.login(inputValues.email, inputValues.password);
       }
       return inputValues;
     } catch (err) {
@@ -53,11 +53,11 @@ function Login(props: {
       <form onSubmit={submitLogin} className="authForm">
         <div className="input-group">
           <TextField
-            name="userName"
+            name="email"
             onChange={handleChange}
             required
             className="outlined-required"
-            label="User Name"
+            label="Email"
             defaultValue=""
           />
 
