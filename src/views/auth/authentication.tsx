@@ -4,7 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Login from '../../components/auth/login/login';
 import SignUp from '../../components/auth/registration/signup';
 import Profile from './profile/profile';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, AuthContextType } from '../../contexts/AuthContext';
 
 export interface RegisterData {
   firstName: string;
@@ -20,7 +20,7 @@ export interface LoginData {
 }
 
 function Authentication() {
-  const auth = useAuth();
+  const auth: AuthContextType | null = useAuth();
 
   let registerInputFields: RegisterData = {
     firstName: '',

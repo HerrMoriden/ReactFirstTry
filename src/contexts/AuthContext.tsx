@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { User, UserCredential } from 'firebase/auth';
 
-type AuthContextType = {
+export type AuthContextType = {
   currentUser: User | null;
   signUp: (
     email: string,
