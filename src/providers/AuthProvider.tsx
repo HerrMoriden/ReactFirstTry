@@ -8,7 +8,7 @@ import {
   updateEmail as updateFBEmail,
   updatePassword as updateFBPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -16,17 +16,17 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  function signUp(email: string, password: string) {
-    try {      
-      return createUserWithEmailAndPassword(auth, email, password);
+  async function signUp(email: string, password: string) {
+    try {
+      return await createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.log(err);
     }
   }
 
-  function login(email: string, password: string) {
+  async function login(email: string, password: string) {
     try {
-      return signInWithEmailAndPassword(auth, email, password);
+      return await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.log(err);
     }
@@ -40,38 +40,37 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  function resetPassword(email: string) {
+  async function resetPassword(email: string) {
     try {
-      return sendPasswordResetEmail(auth, email);
+      return await sendPasswordResetEmail(auth, email);
     } catch (err) {
       console.log(err);
     }
   }
 
-  function updateEmail(email: string) {
+  async function updateEmail(email: string) {
     try {
       if (!currentUser) return;
-      return updateFBEmail(currentUser, email);
+      return await updateFBEmail(currentUser, email);
     } catch (err) {
       console.log(err);
     }
   }
 
-  function updatePassword(password: string) {
+  async function updatePassword(password: string) {
     try {
       if (!currentUser) return;
-      return updateFBPassword(currentUser, password);
+      return await updateFBPassword(currentUser, password);
     } catch (err) {
       console.log(err);
     }
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth ,firebaseUser => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setCurrentUser(firebaseUser);
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 

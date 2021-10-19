@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import './navbar.css';
 import NavElement from './navbarElement/navElement';
 import { useAuth } from '../../contexts/AuthContext';

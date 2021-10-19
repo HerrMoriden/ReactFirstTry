@@ -1,16 +1,9 @@
 import * as firebase from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { resolve } from 'path';
 
 const environment = process.env.NODE_ENV;
 
 console.log('We are in: ' + environment);
-
-const envPath = resolve(process.cwd(), 'config', '.env.' + environment);
-
-require('dotenv').config({ path: envPath });
-
-console.log(process.env.REACT_APP_FIREBASE_API_KEY);
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY || '',
