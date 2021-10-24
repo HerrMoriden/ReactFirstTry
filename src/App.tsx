@@ -1,18 +1,11 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { Route } from 'react-router-dom';
-// import Navbar from './components/navbar/navbar';
+import Navbar from './components/navbar/navbar';
 // import Authentication from './views/auth/authentication';
 // import LandingPage from './views/landing/landingPage';
-import Routes from './routes';
-import Layout from './Layout';
-
-
+import ROUTES, { RenderRoutes } from './routes';
 
 function App() {
-  const RouteComponent = Routes().map(({ path, component }, key) => (
-    <Route exact path={path} component={component} key={key} />
-  ));
-  
   return (
     // <Router>
     //   <div className="App">
@@ -28,9 +21,12 @@ function App() {
     //     </Switch>
     //   </div>
     // </Router>
-    <Layout>
-      {RouteComponent}
-    </Layout>
+    <div className="App">
+      <BrowserRouter>
+        <Navbar />
+        <RenderRoutes routes={ROUTES} />
+      </BrowserRouter>
+    </div>
   );
 }
 
