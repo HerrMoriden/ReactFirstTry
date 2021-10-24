@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
+import '../../../views/auth/authentication.css';
+import { useAuth, AuthContextType } from '../../../contexts/AuthContext';
 import { TextField, Button } from '@mui/material';
 
-import { LoginData } from '../../../views/auth/authentication';
-
-function Login(props: {
-  submitLogin: React.Dispatch<React.SetStateAction<LoginData>>,
-  submitStatus: React.Dispatch<React.SetStateAction<boolean>>,
-}) {
+function Login() {
+  const auth: AuthContextType | null = useAuth();
 
   let inputFields: LoginData = {
     email: '',
     password: '',
   };
   let [inputValues, setInputValues] = useState(inputFields);
+
+  function checkInputValues() {
+    let it: keyof LoginData;
+    for (it in inputValues) {
+      if (inputValues[it].length <= 1) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   function handleChange(e: any): void {
     setInputValues((ev) => ({
@@ -24,19 +32,17 @@ function Login(props: {
   async function submitLogin(e: any) {
     e.preventDefault();
     try {
-      props.submitStatus(true);
-      props.submitLogin((ev) => ({
-        ...ev,
-        ...inputValues,
-      }));
-      return inputValues;
+      if (checkInputValues()) {
+        auth?.login(inputValues.email, inputValues.password);
+      }
+      return;
     } catch (err) {
       console.log(err);
     }
   }
 
   return (
-    <div id="loginContainer">
+    <div className="container">
       <h2>Welcome Back</h2>
       <form onSubmit={submitLogin} className="authForm">
         <div className="input-group">
@@ -60,7 +66,7 @@ function Login(props: {
             autoComplete="current-password"
           />
         </div>
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="contained">
           LOGIN
         </Button>
       </form>
@@ -69,3 +75,8 @@ function Login(props: {
 }
 
 export default Login;
+
+interface LoginData {
+  email: string;
+  password: string;
+}

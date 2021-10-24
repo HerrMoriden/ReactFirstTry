@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 function Navbar() {
   const user = useAuth()?.currentUser;
-  
+
   return (
     <div className="navbar">
       <NavElement variant="text" title="Logo" href="/"></NavElement>
@@ -25,12 +25,12 @@ function Navbar() {
             <NavElement
               variant="outlined"
               title="REGISTER"
-              href="/auth/sign-up"
+              href="/sign-up"
             />
-            <NavElement variant="outlined" title="LOGIN" href="/auth/login" />
+            <NavElement variant="outlined" title="LOGIN" href="/login" />
           </>
         ) : (
-          <NavElement variant="outlined" title="PROFILE" href="/auth" />
+          <NavElement variant="outlined" title="PROFILE" href="/profile" />
         )}
       </div>
     </div>
