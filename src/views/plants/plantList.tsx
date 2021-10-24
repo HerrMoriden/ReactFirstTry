@@ -13,4 +13,4 @@ function PlantList() {
     )
 }
 
-export default PlantList();
+export default PlantList;
