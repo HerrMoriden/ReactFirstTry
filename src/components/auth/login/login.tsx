@@ -46,6 +46,7 @@ function Login(props: {
             required
             className="outlined-required"
             label="Email"
+            type="email"
             defaultValue=""
           />
 

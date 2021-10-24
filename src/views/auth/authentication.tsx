@@ -4,7 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import Login from '../../components/auth/login/login';
 import SignUp from '../../components/auth/registration/signup';
 import Profile from './profile/profile';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, AuthContextType } from '../../contexts/AuthContext';
 
 export interface RegisterData {
   firstName: string;
@@ -20,7 +20,7 @@ export interface LoginData {
 }
 
 function Authentication() {
-  const auth = useAuth();
+  const auth: AuthContextType | null = useAuth();
 
   let registerInputFields: RegisterData = {
     firstName: '',
@@ -40,11 +40,13 @@ function Authentication() {
 
   const [loginInputValues, setLoginInputValues] = useState(loginInputFields);
 
-  const [submitStatus, setSubmitStatus] = useState(false);
+  const [submitStatusRegister, setSubmitStatusRegister] = useState(false);
+  const [submitStatusLogin, setSubmitStatusLogin] = useState(false);
 
   function submitCheck(inputValues: LoginData | RegisterData): boolean {
-    for (const inputValue in inputValues) {
-      if (inputValue.length <= 1) {
+    let it: keyof (LoginData | RegisterData);
+    for (it in inputValues) {
+      if (inputValues[it].length <= 1) {
         return false;
       }
     }
@@ -59,17 +61,19 @@ function Authentication() {
     if (
       submitCheck(registerInputValues) &&
       registerCheck(registerInputValues) &&
-      submitStatus
+      submitStatusRegister
     ) {
+      setSubmitStatusRegister(false);
       auth?.signUp(registerInputValues.email, registerInputValues.password);
     }
-  }, [auth, registerInputValues, submitStatus]);
+  }, [auth, registerInputValues, submitStatusRegister]);
 
   useEffect(() => {
-    if (submitCheck(loginInputValues) && submitStatus) {
+    if (submitCheck(loginInputValues) && submitStatusLogin) {
+      setSubmitStatusLogin(false);
       auth?.login(loginInputValues.email, loginInputValues.password);
     }
-  }, [auth, loginInputValues, submitStatus]);
+  }, [auth, loginInputValues, submitStatusLogin]);
 
   const match = useRouteMatch();
 
@@ -79,13 +83,13 @@ function Authentication() {
         <Route path={`${match.url}/sign-up`}>
           <SignUp
             submitSignUp={setRegisterInputValues}
-            submitStatus={setSubmitStatus}
+            submitStatus={setSubmitStatusRegister}
           />
         </Route>
         <Route path={`${match.url}/login`}>
           <Login
             submitLogin={setLoginInputValues}
-            submitStatus={setSubmitStatus}
+            submitStatus={setSubmitStatusLogin}
           />
         </Route>
         <Route path={match.url}>
