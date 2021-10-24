@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { TextField, Divider, Button } from '@mui/material';
-import { RegisterData } from '../../../views/auth/authentication';
+import { useState } from 'react';
+import '../../../views/auth/authentication.css'
+import { TextField, Button } from '@mui/material';
+import { useAuth, AuthContextType } from '../../../contexts/AuthContext'
 
-function SignUp(props: {
-  submitSignUp: React.Dispatch<React.SetStateAction<RegisterData>>,
-  submitStatus: React.Dispatch<React.SetStateAction<boolean>>,
-}) {
+function SignUp () {
+  const auth: AuthContextType | null = useAuth();
 
   let inputFields: RegisterData = {
     firstName: '',
@@ -15,6 +14,16 @@ function SignUp(props: {
     rePassword: '',
   };
   const [inputValues, setInputValues] = useState(inputFields);
+
+  function checkInputValues(): boolean {
+    let it: keyof RegisterData;
+    for (it in inputValues) {
+      if (inputValues[it].length <= 1) {
+        return false;
+      }
+    }
+    return inputValues.password === inputValues.rePassword;
+  }
 
   const handleChange = (e: any) => {
     setInputValues((ev) => ({
@@ -26,11 +35,9 @@ function SignUp(props: {
   async function submitSignUp(e: any): Promise<void> {
     e.preventDefault();
     try {
-      props.submitStatus(true);
-      props.submitSignUp((ev) => ({
-        ...ev,
-        ...inputValues,
-      }));
+      if (checkInputValues()) {
+        auth?.signUp(inputValues.email, inputValues.password)
+      }
       return;
     } catch (err) {
       console.log(err);
@@ -38,9 +45,8 @@ function SignUp(props: {
   }
 
   return (
-    <div className="registerContainer">
+    <div className="container">
       <h2>Welcome, Your Fist Time ?</h2>
-      <Divider variant="middle" />
       <form onSubmit={submitSignUp} className="authForm">
         <div className="input-group name">
           <TextField
@@ -63,7 +69,6 @@ function SignUp(props: {
             autoComplete="family-name"
           />
         </div>
-        <Divider variant="middle" />
         <div className="input-group">
           <div>
             <TextField
@@ -98,7 +103,7 @@ function SignUp(props: {
             />
           </div>
         </div>
-        <Button type="submit" variant="outlined">
+        <Button type="submit" variant="contained">
           REGISTER
         </Button>
       </form>
@@ -107,3 +112,11 @@ function SignUp(props: {
 }
 
 export default SignUp;
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  rePassword: string;
+}

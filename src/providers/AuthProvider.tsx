@@ -66,6 +66,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
+  async function isLoggedIn() {
+    try {
+      return auth.currentUser;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setCurrentUser(firebaseUser);

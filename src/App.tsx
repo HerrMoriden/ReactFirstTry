@@ -24,7 +24,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        <RenderRoutes routes={ROUTES} />
+        <RenderRoutes routes={ROUTES()} />
       </BrowserRouter>
     </div>
   );
