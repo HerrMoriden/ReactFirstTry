@@ -7,10 +7,16 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <NavElement variant="text" title="Logo" href="/"></NavElement>
-      <div className="navbar-navigation">
+      <div className="navContainer">
+        <NavElement variant="text" title="Logo" href="/"></NavElement>
+      </div>
+      <div className="navContainer navbar-navigation">
         <div>
-          <NavElement variant="outlined" title="NAV1" href="#"></NavElement>
+          <NavElement
+            variant="outlined"
+            title="NAV1"
+            href="/plants"
+          ></NavElement>
         </div>
         <div>
           <NavElement variant="outlined" title="NAV2" href="#"></NavElement>
@@ -19,14 +25,10 @@ function Navbar() {
           <NavElement variant="outlined" title="NAV3" href="#"></NavElement>
         </div>
       </div>
-      <div className="auth-group">
+      <div className="navContainer auth-group">
         {!user ? (
           <>
-            <NavElement
-              variant="outlined"
-              title="REGISTER"
-              href="/sign-up"
-            />
+            <NavElement variant="outlined" title="REGISTER" href="/sign-up" />
             <NavElement variant="outlined" title="LOGIN" href="/login" />
           </>
         ) : (
