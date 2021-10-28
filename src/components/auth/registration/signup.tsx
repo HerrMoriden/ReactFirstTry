@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import '../../../views/auth/authentication.css'
+import { useHistory } from 'react-router-dom';
+import '../../../views/auth/authentication.css';
 import { TextField, Button } from '@mui/material';
-import { useAuth, AuthContextType } from '../../../contexts/AuthContext'
+import { useAuth, AuthContextType } from '../../../contexts/AuthContext';
 
-function SignUp () {
+function SignUp() {
   const auth: AuthContextType | null = useAuth();
+  const history = useHistory();
 
   let inputFields: RegisterData = {
     firstName: '',
@@ -36,12 +38,17 @@ function SignUp () {
     e.preventDefault();
     try {
       if (checkInputValues()) {
-        auth?.signUp(inputValues.email, inputValues.password)
+        forward();
+        auth?.signUp(inputValues.email, inputValues.password);
       }
       return;
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function forward() {
+    history.push('/profile');
   }
 
   return (

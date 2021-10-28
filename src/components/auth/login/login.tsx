@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../../views/auth/authentication.css';
 import { useAuth, AuthContextType } from '../../../contexts/AuthContext';
 import { TextField, Button } from '@mui/material';
 
 function Login() {
   const auth: AuthContextType | null = useAuth();
+  const history = useHistory();
 
   let inputFields: LoginData = {
     email: '',
@@ -33,12 +35,17 @@ function Login() {
     e.preventDefault();
     try {
       if (checkInputValues()) {
+        forward();
         auth?.login(inputValues.email, inputValues.password);
       }
       return;
     } catch (err) {
       console.log(err);
     }
+  }
+
+  function forward() {
+    history.push('/');
   }
 
   return (
