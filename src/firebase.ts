@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const environment = process.env.NODE_ENV;
 
@@ -25,5 +26,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+
+export const fs = getFirestore(app);
 
 export default app;

@@ -3,9 +3,11 @@ import { useHistory } from 'react-router-dom';
 import '../../../views/auth/authentication.css';
 import { TextField, Button } from '@mui/material';
 import { useAuth, AuthContextType } from '../../../contexts/AuthContext';
+import { useFS, FSContextType } from '../../../contexts/FSContext';
 
 function SignUp() {
   const auth: AuthContextType | null = useAuth();
+  const fs: FSContextType | null = useFS();
   const history = useHistory();
 
   let inputFields: RegisterData = {
@@ -38,8 +40,9 @@ function SignUp() {
     e.preventDefault();
     try {
       if (checkInputValues()) {
-        forward();
         auth?.signUp(inputValues.email, inputValues.password);
+        fs?.addUserData(inputValues);
+        forward();
       }
       return;
     } catch (err) {
@@ -48,7 +51,7 @@ function SignUp() {
   }
 
   function forward() {
-    history.push('/profile');
+    history.push('/');
   }
 
   return (
